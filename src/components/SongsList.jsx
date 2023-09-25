@@ -1,12 +1,15 @@
-import {  useEffect, useRef } from "react";
-import { songs } from "../constants";
+import { useEffect, useRef } from "react";
+
 import SingleSong from "./singleSong";
 
-const SongsList = ({ currentIndex, isPlaying, setIsPlaying, }) => {
-
-
+const SongsList = ({
+  currentIndex,
+  setCurrentIndex,
+  songsList,
+  setSongsList,
+}) => {
   const songsListRef = useRef(null);
- 
+  const audioRefs = useRef(songsList.map(() => useRef(null)));
 
   useEffect(() => {
     if (songsListRef.current && currentIndex >= 0) {
@@ -22,27 +25,25 @@ const SongsList = ({ currentIndex, isPlaying, setIsPlaying, }) => {
 
 
 
-  const handlePlayPauseClick = () => {
-    setIsPlaying(!isPlaying);
-  
-  };
-
-  const songsList = songs.map((song, index) => (
+  const songs = songsList.map((song, index) => (
     <SingleSong
       key={index}
       {...song}
-      handlePlayPauseClick={handlePlayPauseClick}
+      index={index}
       currentIndex={currentIndex}
-      isPlaying={isPlaying}
+      songsList={songsList}
+      setSongsList={setSongsList}
+      setCurrentIndex={setCurrentIndex}
+      songRef={audioRefs.current[index]}
     />
   ));
 
   return (
     <div
       ref={songsListRef}
-      className="flex w-full my-5 snap-x snap-mandatory  overflow-x-hidden  "
+      className="flex  w-full my-5 snap-x snap-mandatory  overflow-x-hidden"
     >
-      {songsList}
+      {songs}
     </div>
   );
 };

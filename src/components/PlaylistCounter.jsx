@@ -28,8 +28,8 @@ const PlaylistCounter = ({ currentIndex, setCurrentIndex, songsList }) => {
       >
         <FiChevronLeft />
       </button>
-      <section className="px-4 font-cabin">
-        {`${currentIndex} / ${songsList.length - 1}`}
+      <section className="px-4 font-cabin text-white">
+        {`${currentIndex + 1} / ${songsList.length}`}
       </section>
       <button
         onClick={nextIndex}

@@ -7,9 +7,9 @@ export const themeContext = createContext();
 
 const ContextProvider = ({ children }) => {
 
-    const [,,yasuo] = images
+    
 
-  const [bgImage, setBgImage] = useState(yasuo);
+  const [bgImage, setBgImage] = useState(images);
   const [songsList, setSongsList] = useState(songs)
   const [currentIndex, setCurrentIndex] = useState(0)
   return (

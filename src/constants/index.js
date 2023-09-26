@@ -33,7 +33,7 @@ export const songs = [
   },
   {
     
-    title: "Ignie",
+    title: "Ignite",
     source: Ignite,
     img: riven,
     isActive: false

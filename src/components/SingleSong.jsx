@@ -12,6 +12,9 @@ const SingleSong = ({
   setSongsList,
   songRef,
 }) => {
+
+  // console.log(songRef)
+
   const handlePlayPauseClick = () => {
     const updatedSongData = [...songsList];
     if (currentIndex === index) {
@@ -19,7 +22,6 @@ const SingleSong = ({
         !updatedSongData[currentIndex].isActive;
 
       if (updatedSongData[currentIndex].isActive) {
-        console.log(updatedSongData[currentIndex].isActive);
         songRef.current.play();
       } else {
         updatedSongData[currentIndex].isActive;
@@ -33,6 +35,7 @@ const SingleSong = ({
   const handleSelectSong = () => {
     setCurrentIndex(index);
   };
+
 
   return (
     <div

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef } from "react";
 import { themeContext } from "../context/context";
 import PlaylistCounter from "../components/PlaylistCounter";
 import SongsList from "../components/SongsList";
@@ -7,6 +7,8 @@ import MusicControl from "../components/MusicControl";
 export const Playlist = () => {
   const { songsList, setSongsList, currentIndex, setCurrentIndex } =
     useContext(themeContext);
+
+    const audioRefs = useRef(songsList.map(() => useRef()));
 
   return (
     <div className="w-full min-h-screen flex flex-col">
@@ -29,9 +31,10 @@ export const Playlist = () => {
           songsList={songsList}
           setSongsList={setSongsList}
           setCurrentIndex={setCurrentIndex}
+          audioRefs={audioRefs}
         />
       </div>
-      <MusicControl />
+      <MusicControl audioRefs={audioRefs} setSongsList={setSongsList} setCurrentIndex={setCurrentIndex} songsList={songsList} currentIndex={currentIndex} />
     </div>
   );
 };

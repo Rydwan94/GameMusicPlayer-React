@@ -9,8 +9,8 @@ const PlaylistCounter = ({ currentIndex, setCurrentIndex, songsList }) => {
 
   const nextIndex = () => {
     if (currentIndex < songsList.length - 1) {
-      const nextSongIndex = currentIndex + 1;
-      setCurrentIndex(nextSongIndex);
+      
+      setCurrentIndex(prev => prev + 1);
     }
   };
 

@@ -7,9 +7,10 @@ const SongsList = ({
   setCurrentIndex,
   songsList,
   setSongsList,
+  audioRefs
 }) => {
   const songsListRef = useRef(null);
-  const audioRefs = useRef(songsList.map(() => useRef(null)));
+  
 
   useEffect(() => {
     if (songsListRef.current && currentIndex >= 0) {

@@ -77,4 +77,4 @@ export const songs = [
 
 export const icons = [bellIcon, heartIcon];
 
-export const images = [jinx, riven, godOfWar, spiderman, cyberpunk,];
+export const images = [jinx, riven, godOfWar, spiderman, cyberpunk,witcher];

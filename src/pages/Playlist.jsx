@@ -23,8 +23,10 @@ export const Playlist = () => {
         </h1>
         <PlaylistCounter
           songsList={songsList}
+          setSongsList={setSongsList}
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
+          audioRefs={audioRefs}
         />
         <SongsList
           currentIndex={currentIndex}

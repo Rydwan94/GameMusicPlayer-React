@@ -39,17 +39,18 @@ const MusicControl = ({
     }
   }, [currentSongRef]);
 
-  useEffect(() => {
-    audioRefs.current.forEach((audioRef, index) => {
-      if (index !== currentIndex) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-        const updatedSongList = [...songsList];
-        updatedSongList[index].isActive = false;
-        setSongsList(updatedSongList);
-      }
-    });
-  }, [currentIndex]);
+  // useEffect(() => {
+  //   audioRefs.current.forEach((audioRef, index) => {
+  //     if (index !== currentIndex) {
+  //       audioRef.current.pause();
+  //       audioRef.current.currentTime = 0;
+  //       const updatedSongList = [...songsList];
+  //       updatedSongList[index].isActive = false;
+  //       setSongsList(updatedSongList);
+  //     }
+  //   });
+  //   console.log('render')
+  // }, [currentIndex]);
 
   const handlePlayPause = () => {
     const updatedSong = [...songsList];

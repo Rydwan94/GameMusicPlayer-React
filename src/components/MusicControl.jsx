@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import {
   FaPlay,
   FaPause,
@@ -17,75 +17,158 @@ const MusicControl = ({
   const songTitle = songsList[currentIndex].title;
   const songIsActive = !songsList[currentIndex].isActive;
   const currentSongRef = audioRefs.current[currentIndex];
-  const duration = useRef(0)
+  const [currentTime, setCurrentTime] = useState("0:00"); 
+  const [progress, setProgress] = useState(0);
+
 
   useEffect(() => {
-    if(currentSongRef){
-      duration.current = currentSongRef.duration
-    }
-  }, [currentSongRef])
+    if (currentSongRef) {
+      const updateCurrentTime = () => {
+        const minutes = Math.floor(currentSongRef.current.currentTime / 60);
+        const seconds = Math.floor(currentSongRef.current.currentTime % 60)
+          .toString()
+          .padStart(2, "0"); 
+        setCurrentTime(`${minutes}:${seconds}`);
+        const calculatedProgress =
+        (currentSongRef.current.currentTime / currentSongRef.current.duration) * 100;
+      setProgress(isNaN(calculatedProgress) ? 0 : calculatedProgress);
+      };
+      
 
-  console.log(duration)
-  
+      currentSongRef.current.addEventListener("timeupdate", updateCurrentTime);
+    }
+    console.log(currentIndex)
+  }, [currentSongRef]);
+
+  useEffect(() => {
+    audioRefs.current.forEach((audioRef, index) => {
+      if (index !== currentIndex) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        const updatedSongList = [...songsList];
+        updatedSongList[index].isActive = false;
+        setSongsList(updatedSongList);
+      }
+    });
+  }, [currentIndex]);
+
   const handlePlayPause = () => {
-    const updatedSong = [...songsList];
-    updatedSong[currentIndex].isActive = !updatedSong[currentIndex].isActive;
-    if (updatedSong[currentIndex].isActive) {
-      currentSongRef.current.play();
-    } else {
-      currentSongRef.current.pause();
-    }
-    setSongsList(updatedSong);
-  };
+   const updatedSong = [...songsList];
+  const currentSong = updatedSong[currentIndex];
 
+  if (currentSong.isActive) {
+   
+    currentSongRef.current.pause();
+  } else {
+    currentSongRef.current.play();
+  }
+
+  currentSong.isActive = !currentSong.isActive;
+  setSongsList(updatedSong);
+  };
 
   const handleNextSongButton = () => {
     if (currentIndex < songsList.length - 1) {
-      
-      setCurrentIndex(prev => prev +1);
+      const nextIndex = currentIndex + 1;
+      const newSongRef = audioRefs.current[nextIndex];
+  
+
+      const updatedSongList = [...songsList];
+  
+
+      updatedSongList[currentIndex].isActive = false;
+  
+ 
+      if (newSongRef) {
+        newSongRef.current.play();
+        updatedSongList[nextIndex].isActive = true;
+      }
+  
+
+      setCurrentIndex(nextIndex);
+  
+   
+      setSongsList(updatedSongList);
     }
-
   };
-
+  
   const handlePrevSongButton = () => {
     if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
+      const prevIndex = currentIndex - 1;
+      const newSongRef = audioRefs.current[prevIndex];
+  
+      const updatedSongList = [...songsList];
+  
+      updatedSongList[currentIndex].isActive = false;
+  
+      if (newSongRef) {
+        newSongRef.current.play();
+        updatedSongList[prevIndex].isActive = true;
+      }
+  
+    
+      setCurrentIndex(prevIndex);
+  
+    
+      setSongsList(updatedSongList);
     }
+  };
+  
+  
+
+  const handleResetSong = () => {
+    currentSongRef.current.currentTime = 0
   }
+
+  const handleProgressClick = (e) => {
+
+    const progressBar = e.currentTarget;
+    const rect = progressBar.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const newProgress = (offsetX / rect.width) * 100;
+    setProgress(newProgress);
+
+
+    const newTime = (newProgress / 100) * currentSongRef.current.duration;
+    currentSongRef.current.currentTime = newTime;
+  };
+
+
 
   return (
     <>
-    <div></div>
+      <div onClick={handleProgressClick} className="relative w-full h-1 cursor-pointer bg-white bg-gradient-to-r from-[#151515] to-[#170525]">
+        <div style={{ width: `${progress}%`}} className="relative h-1  bg-gradient-to-r from-[#3e7928] to-[#00ffaf] ">
+          <div className="absolute right-[-10px] top-[-5px] w-4 h-4 cursor-pointer bg-white rounded-full bg-gradient-to-r from-[#00ffaf] to-[#00edff] hover:animate-jump  "></div>
+        </div>
+      </div>
       <div className="flex justify-between items-center px-10 bg-gradient-to-r from-[#151515] to-[#170525] h-20 w-full">
         <section className="flex flex-col items-center">
           <p className="text-primaryText text-xl">{songTitle}</p>
           <p className="text-[#A0A0A0]">Rydwan Remix</p>
         </section>
         <section className="flex justify-between items-center min-w-[150px]">
-          <button className="text-white text-xl  cursor-pointer" >
-
-          <FaStepBackward onClick={handlePrevSongButton} />
+          <button className="text-white text-xl  cursor-pointer">
+            <FaStepBackward onClick={handlePrevSongButton} />
           </button>
           {songIsActive ? (
             <button className="text-white text-xl  cursor-pointer">
-            <FaPlay
-              onClick={handlePlayPause}
-              
-            />
+              <FaPlay onClick={handlePlayPause} />
             </button>
           ) : (
             <button className="text-white text-xl cursor-pointer">
-            <FaPause
-              onClick={handlePlayPause}
-           
-            />
+              <FaPause onClick={handlePlayPause} />
             </button>
           )}
 
-          <button className="text-white text-xl  cursor-pointer" ><FaStepForward onClick={handleNextSongButton} /></button>
-          <button className="text-white text-xl cursor-pointer" ><FaSync/></button>
+          <button className="text-white text-xl  cursor-pointer">
+            <FaStepForward onClick={handleNextSongButton} />
+          </button>
+          <button className="text-white text-xl cursor-pointer">
+            <FaSync onClick={handleResetSong} />
+          </button>
         </section>
-        <section className="text-white">current time</section>
+        <section className="text-white">{currentTime}</section>
       </div>
     </>
   );

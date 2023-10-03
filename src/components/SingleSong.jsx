@@ -40,7 +40,7 @@ const SingleSong = ({
   return (
     <div
       onClick={handleSelectSong}
-      className={`flex justify-between items-center snap-start min-w-[600px] h-[200px]  max-md:h-[110px] max-md:min-w-[90%] max-md:ml-16  rounded-2xl bg-black text-white mr-7 border border-[#7C7C7C] ${
+      className={`flex justify-between items-center snap-start max-md:snap-center min-w-[600px] h-[200px]  max-md:h-[110px] max-md:min-w-[90%] max-md:ml-16  rounded-2xl bg-black text-white mr-7 border border-[#7C7C7C] ${
         currentIndex === index &&
         " bg-gradient-to-r from-[#151515] to-[#4f0b84]"
       }`}

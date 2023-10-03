@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-import SingleSong from "./singleSong";
+import SingleSong from "./SingleSong";
 
 const SongsList = ({
   currentIndex,

@@ -18,7 +18,7 @@ export const Playlist = () => {
             catalog by <span className="text-white underline">Rydwan</span>
           </p>
           <p className="uppercase text-4xl text-white font-allerta mt-2">
-            league of legends
+            Rydwan playlist
           </p>
         </h1>
         <PlaylistCounter

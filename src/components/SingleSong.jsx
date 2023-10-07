@@ -1,4 +1,4 @@
-import { FaPlay, FaPause } from "react-icons/fa";
+import { FaPlay, FaPause, FaHeart } from "react-icons/fa";
 
 const SingleSong = ({
   index,
@@ -12,8 +12,9 @@ const SingleSong = ({
   setSongsList,
   songRef,
 }) => {
+  const isFavourite = songsList[currentIndex].isFavourite;
 
-  // console.log(songRef)
+ 
 
   const handlePlayPauseClick = () => {
     const updatedSongData = [...songsList];
@@ -36,6 +37,16 @@ const SingleSong = ({
     setCurrentIndex(index);
   };
 
+  const handleIsFavourite = () => {
+    const updatedSonga = [...songsList];
+
+    if (currentIndex === index) {
+      updatedSonga[currentIndex].isFavourite =
+        !updatedSonga[currentIndex].isFavourite;
+    }
+
+    setSongsList(updatedSonga);
+  };
 
   return (
     <div
@@ -50,7 +61,15 @@ const SingleSong = ({
         alt="song image"
         className="rounded-2xl h-full border max-w-full border-[#7C7C7C] "
       />
-      <h3 className="font-allerta">{title}</h3>
+      <div className="flex flex-col items-center">
+        <h3 className="font-allerta">{title}</h3>
+        <FaHeart
+          onClick={handleIsFavourite}
+          className={`text-secondaryText mt-5 ${
+            isFavourite && "animate-jump text-red-600"
+          }`}c
+        />
+      </div>
       <audio src={source} ref={songRef} />
       <button
         className="flex justify-center items-center rounded-full w-12 h-12 -mr-5 bg-[#40E2C1] hover:animate-jump "

@@ -39,18 +39,6 @@ const MusicControl = ({
     }
   }, [currentSongRef]);
 
-  // useEffect(() => {
-  //   audioRefs.current.forEach((audioRef, index) => {
-  //     if (index !== currentIndex) {
-  //       audioRef.current.pause();
-  //       audioRef.current.currentTime = 0;
-  //       const updatedSongList = [...songsList];
-  //       updatedSongList[index].isActive = false;
-  //       setSongsList(updatedSongList);
-  //     }
-  //   });
-  //   console.log('render')
-  // }, [currentIndex]);
 
   const handlePlayPause = () => {
     const updatedSong = [...songsList];
@@ -146,24 +134,24 @@ const MusicControl = ({
           <p className="text-primaryText text-xl max-md:text-[12px]">{songTitle}</p>
           <p className="text-[#A0A0A0] max-md:text-[12px]">Rydwan Remix</p>
         </section>
-        <section className="flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 justify-between items-center min-w-[140px]">
-          <button className="text-white text-xl  cursor-pointer">
+        <section className="flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 justify-between items-center ">
+          <button className="text-white text-xl  cursor-pointer transition-all hover:scale-110 ml-5 ">
             <FaStepBackward onClick={handlePrevSongButton} />
           </button>
           {songIsActive ? (
-            <button className="text-white text-xl  cursor-pointer">
+            <button className="text-white text-xl  cursor-pointer transition-all hover:scale-110 ml-5">
               <FaPlay onClick={handlePlayPause} />
             </button>
           ) : (
-            <button className="text-white text-xl cursor-pointer">
+            <button className="text-white text-xl cursor-pointer transition-all hover:scale-110 ml-5">
               <FaPause onClick={handlePlayPause} />
             </button>
           )}
 
-          <button className="text-white text-xl  cursor-pointer">
+          <button className="text-white text-xl  cursor-pointer transition-all hover:scale-110 ml-5">
             <FaStepForward onClick={handleNextSongButton} />
           </button>
-          <button className="text-white text-xl cursor-pointer">
+          <button className="text-white text-xl cursor-pointer transition-all hover:scale-110 ml-5">
             <FaSync onClick={handleResetSong} />
           </button>
         </section>

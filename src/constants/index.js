@@ -35,41 +35,47 @@ export const songs = [
     source: LegendsNeverDie,
     img: jinx,
     isActive: false,
+    isFavourite: false,
   },
   {
     
     title: "Ignite",
     source: Ignite,
     img: riven,
-    isActive: false
+    isActive: false,
+    isFavourite: false,
   },
   {
     
     title: "God of War",
     source: godOfWarTheme,
     img: godOfWar,
-    isActive: false
+    isActive: false,
+    isFavourite: false,
   },
   {
     
     title: "Spider-Man",
     source: spidermanTheme,
     img:  spiderman,
-    isActive: false
+    isActive: false,
+    isFavourite: false,
   },
   {
     
     title: "Cyberpunk",
     source: cyberpunkTheme,
     img: cyberpunk  ,
-    isActive: false
+    isActive: false,
+    isFavourite: false,
   },
   {
     
     title: "The Witcher",
     source: witcherTheme,
     img: witcher  ,
-    isActive: false
+    isActive: false,
+    isFavourite: false,
   },
   
   

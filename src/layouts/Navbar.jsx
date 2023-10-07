@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { navLinks } from "../constants";
-import { icons } from "../constants";
+
+import { FaHeart } from "react-icons/fa";
 
 import Hamburger from "../components/Hamburger";
 import Logo from "../components/Logo";
+import { themeContext } from "../context/context";
 
 const Navbar = () => {
+  const context = useContext(themeContext);
   const [isOpen, setIsOpen] = useState(false);
+
+  const { songsList, currentIndex } = context;
+
+  const isFavourite = songsList.filter((song) => song.isFavourite).length;
+  console.log(isFavourite);
 
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -22,20 +30,16 @@ const Navbar = () => {
     </li>
   ));
 
-  const iconsList = icons.map((icon) => (
-    <img
-      className="mx-3 cursor-pointer"
-      key={icon}
-      src={icon}
-      alt="icon"
-      width={20}
-      height={20}
-    />
-  ));
-
   return (
     <header className="flex justify-between flex-wrap w-full bg-gradient-to-r from-[#151515] to-[#170525]">
-      <section className="flex items-center max-md:hidden">{iconsList}</section>
+      <section className="flex items-center pl-4 max-md:hidden">
+        <FaHeart
+          className={`text-xl text-secondaryText mt-5 ${
+            isFavourite && "animate-jump text-red-600"
+          }`}
+        />
+        <p className="text-white">{isFavourite}</p>
+      </section>
       <section className="max-md:w-full flex justify-between">
         <Hamburger onClick={handleMenu} isOpen={isOpen} />
         <Logo />

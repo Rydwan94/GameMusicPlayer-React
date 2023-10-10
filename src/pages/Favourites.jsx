@@ -1,16 +1,24 @@
-import { useContext, useRef } from "react";
-import { themeContext } from "../context/context";
-import PlaylistCounter from "../components/PlaylistCounter";
+import { useContext, useRef } from "react"
+import { themeContext } from "../context/context"
+
 import SongsList from "../components/SongsList";
 import MusicControl from "../components/MusicControl";
+import PlaylistCounter from "../components/PlaylistCounter"
 
-export const Playlist = () => {
+
+
+const Favourites = () => {
 
   const context = useContext(themeContext)
+
   const { songsList, setSongsList, currentIndex, setCurrentIndex } = context
 
-    const audioRefs = useRef(songsList.map(() => useRef()));
-
+  
+  const favouritesSongs = songsList.filter(song => song.isFavourite)
+  
+  const audioRefs = useRef(favouritesSongs.map(() => useRef()));
+  
+  if(favouritesSongs.length > 0){
   return (
     <div className="w-full min-h-screen flex flex-col">
       <div className="flex flex-col justify-center items-start w-full min-h-screen pl-48 max-md:pl-0 max-md:items-center  ">
@@ -23,7 +31,7 @@ export const Playlist = () => {
           </p>
         </h1>
         <PlaylistCounter
-          songsList={songsList}
+          songsList={favouritesSongs}
           setSongsList={setSongsList}
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
@@ -31,13 +39,16 @@ export const Playlist = () => {
         />
         <SongsList
           currentIndex={currentIndex}
-          songsList={songsList}
+          songsList={favouritesSongs}
           setSongsList={setSongsList}
           setCurrentIndex={setCurrentIndex}
           audioRefs={audioRefs}
         />
       </div>
-      <MusicControl audioRefs={audioRefs} setSongsList={setSongsList} setCurrentIndex={setCurrentIndex} songsList={songsList} currentIndex={currentIndex} />
+      <MusicControl audioRefs={audioRefs} setSongsList={setSongsList} setCurrentIndex={setCurrentIndex} songsList={favouritesSongs} currentIndex={currentIndex} />
     </div>
-  );
-};
+  )
+  } else return <h1 className="text-white">You dont have favourites Songs</h1>
+}
+
+export default Favourites

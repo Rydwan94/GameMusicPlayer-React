@@ -23,8 +23,8 @@ export const navLinks = [
     path: "/playlist",
   },
   {
-    label: "Authors",
-    path: "/authors",
+    label: "Favourites",
+    path: "/favourites",
   },
 ];
 

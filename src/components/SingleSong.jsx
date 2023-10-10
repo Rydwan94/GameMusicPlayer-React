@@ -12,8 +12,8 @@ const SingleSong = ({
   setSongsList,
   songRef,
 }) => {
-  const isFavourite = songsList[currentIndex].isFavourite;
 
+  const isFavourite = songsList[index].isFavourite;
  
 
   const handlePlayPauseClick = () => {
@@ -66,7 +66,7 @@ const SingleSong = ({
         <FaHeart
           onClick={handleIsFavourite}
           className={`text-secondaryText mt-5 ${
-            isFavourite && "animate-jump text-red-600"
+            isFavourite && "animate-jump text-red-500"
           }`}c
         />
       </div>

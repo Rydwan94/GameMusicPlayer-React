@@ -12,7 +12,7 @@ const Navbar = () => {
   const context = useContext(themeContext);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { songsList, currentIndex } = context;
+  const { songsList} = context;
 
   const isFavourite = songsList.filter((song) => song.isFavourite).length;
   console.log(isFavourite);
@@ -31,14 +31,14 @@ const Navbar = () => {
   ));
 
   return (
-    <header className="flex justify-between flex-wrap w-full bg-gradient-to-r from-[#151515] to-[#170525]">
-      <section className="flex items-center pl-4 max-md:hidden">
+    <header className="relative flex justify-between flex-wrap w-full bg-gradient-to-r from-[#151515] to-[#170525]">
+      <section className="flex items-center pl-4 ">
         <FaHeart
-          className={`text-xl text-secondaryText mt-5 ${
-            isFavourite && "animate-jump text-red-600"
+          className={`text-xl text-secondaryText ${
+            isFavourite && "animate-jump text-red-500"
           }`}
         />
-        <p className="text-white">{isFavourite}</p>
+        <p className="text-white mb-4">{isFavourite}</p>
       </section>
       <section className="max-md:w-full flex justify-between">
         <Hamburger onClick={handleMenu} isOpen={isOpen} />

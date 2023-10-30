@@ -20,6 +20,8 @@ const MusicControl = ({
   const [currentTime, setCurrentTime] = useState("0:00");
   const [progress, setProgress] = useState(0);
 
+  
+
   useEffect(() => {
     if (currentSongRef) {
       const updateCurrentTime = () => {

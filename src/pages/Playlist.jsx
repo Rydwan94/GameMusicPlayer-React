@@ -7,10 +7,12 @@ import MusicControl from "../components/MusicControl";
 export const Playlist = () => {
 
   const context = useContext(themeContext)
-  const { songsList, setSongsList, currentIndex, setCurrentIndex } = context
+  const { songsList, setSongsList, setFilteredSongs,  currentIndex, setCurrentIndex } = context
+
+  
 
     const audioRefs = useRef(songsList.map(() => useRef()));
-
+  console.log(songsList)
   return (
     <div className="w-full min-h-screen flex flex-col">
       <div className="flex flex-col justify-center items-start w-full min-h-screen pl-48 max-md:pl-0 max-md:items-center  ">
@@ -25,6 +27,7 @@ export const Playlist = () => {
         <PlaylistCounter
           songsList={songsList}
           setSongsList={setSongsList}
+          
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
           audioRefs={audioRefs}
@@ -33,6 +36,7 @@ export const Playlist = () => {
           currentIndex={currentIndex}
           songsList={songsList}
           setSongsList={setSongsList}
+          setFilteredSongs={setFilteredSongs}
           setCurrentIndex={setCurrentIndex}
           audioRefs={audioRefs}
         />

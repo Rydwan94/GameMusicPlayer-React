@@ -9,15 +9,22 @@ const ContextProvider = ({ children }) => {
 
     
 
-  const [bgImage, setBgImage] = useState(images);
   const [songsList, setSongsList] = useState(songs)
+  const [filteredSongs, setFilteredSongs] = useState([])
+  const [bgImage, setBgImage] = useState(images);
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [filteredIndex, setFilteredIndex] = useState(0)
+ 
   return (
     <themeContext.Provider
       value={{
         currentIndex,
         setCurrentIndex,
+        filteredIndex,
+        setFilteredIndex,
         songsList,
+        filteredSongs,
+        setFilteredSongs,
         setSongsList,
         bgImage,
         setBgImage,

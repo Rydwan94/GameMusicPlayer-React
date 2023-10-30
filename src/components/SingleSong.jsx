@@ -10,12 +10,14 @@ const SingleSong = ({
   isActive,
   songsList,
   setSongsList,
+  setFilteredSongs,
   songRef,
 }) => {
 
   const isFavourite = songsList[index].isFavourite;
- 
 
+  
+ 
   const handlePlayPauseClick = () => {
     const updatedSongData = [...songsList];
     if (currentIndex === index) {
@@ -38,16 +40,19 @@ const SingleSong = ({
   };
 
   const handleIsFavourite = () => {
-    const updatedSonga = [...songsList];
+    const updatedSong = [...songsList];
 
-    if (currentIndex === index) {
-      updatedSonga[currentIndex].isFavourite =
-        !updatedSonga[currentIndex].isFavourite;
+    if (currentIndex === index) {     
+      const songToModify = updatedSong[currentIndex];
+      
+      songToModify.isFavourite = !songToModify.isFavourite;
+      setSongsList(updatedSong)
     }
-
-    setSongsList(updatedSonga);
+    
+    const filtered = updatedSong.filter(song => song.isFavourite)
+    setFilteredSongs(filtered)
   };
-
+  
   return (
     <div
       onClick={handleSelectSong}
@@ -67,13 +72,13 @@ const SingleSong = ({
           onClick={handleIsFavourite}
           className={`text-secondaryText mt-5 ${
             isFavourite && "animate-jump text-red-500"
-          }`}c
+          }`}
         />
       </div>
       <audio src={source} ref={songRef} />
       <button
         className="flex justify-center items-center rounded-full w-12 h-12 -mr-5 bg-[#40E2C1] hover:animate-jump "
-        onClick={() => handlePlayPauseClick(currentIndex)}
+        onClick={handlePlayPauseClick}
       >
         {isActive ? <FaPause /> : <FaPlay />}
       </button>

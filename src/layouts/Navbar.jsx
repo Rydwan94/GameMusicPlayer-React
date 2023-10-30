@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { navLinks } from "../constants";
 
 import { FaHeart } from "react-icons/fa";
@@ -12,17 +12,46 @@ const Navbar = () => {
   const context = useContext(themeContext);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { songsList} = context;
+  const location = useLocation();
+  const { pathname } = location;
+  
+  const navigate = useNavigate()
+
+  const {
+    songsList,
+    filteredSongs,
+    setBgImage,
+    currentIndex,
+    setFilteredIndex,
+  } = context;
 
   const isFavourite = songsList.filter((song) => song.isFavourite).length;
-  console.log(isFavourite);
+  const favouritesSongs = filteredSongs.filter((song) => song.isFavourite);
 
+  useEffect(() => {
+    if (pathname === "/favourites" && favouritesSongs.length > 0) {
+      const currentSongImg = favouritesSongs[0];
+      setFilteredIndex(0)
+      setBgImage(currentSongImg.img);
+    } else if (pathname === "/playlist") {
+      const currentSongImg = songsList[currentIndex];
+      setBgImage(currentSongImg.img);
+    }
+  }, [pathname]);
+
+  
   const handleMenu = () => {
     setIsOpen(!isOpen);
   };
+  
+  const redirectToAnotherURL = () => {
+    navigate('/favourites'); 
+  };
+  
 
   const links = navLinks.map((link) => (
     <li
+     
       className="font-cabin text-cente p-1 mx-4 max-md:py-4 rounded-xl transition-all hover:bg-white hover:scale-95 hover:text-black"
       key={link.label}
     >
@@ -32,10 +61,10 @@ const Navbar = () => {
 
   return (
     <header className="relative flex justify-between flex-wrap w-full bg-gradient-to-r from-[#151515] to-[#170525]">
-      <section className="flex items-center pl-4 ">
-        <FaHeart
+      <section className="flex items-center pl-4 max-md:absolute top-5 left-20">
+        <FaHeart onClick={redirectToAnotherURL}
           className={`text-xl text-secondaryText ${
-            isFavourite && "animate-jump text-red-500"
+            isFavourite && "animate-jump text-red-600"
           }`}
         />
         <p className="text-white mb-4">{isFavourite}</p>

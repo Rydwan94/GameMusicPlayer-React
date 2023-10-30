@@ -8,17 +8,20 @@ import PlaylistCounter from "../components/PlaylistCounter"
 
 
 const Favourites = () => {
-
+  
   const context = useContext(themeContext)
+  const { filteredSongs, setFilteredSongs, setSongsList, filteredIndex, setFilteredIndex} = context
+  
+  
+  // const favouritesSongs = filteredSongs.filter(song => song.isFavourite)
+  
+  const audioRefs = useRef(filteredSongs.map(() => useRef()));
+  
 
-  const { songsList, setSongsList, currentIndex, setCurrentIndex } = context
-
   
-  const favouritesSongs = songsList.filter(song => song.isFavourite)
+  console.log(filteredSongs)
   
-  const audioRefs = useRef(favouritesSongs.map(() => useRef()));
-  
-  if(favouritesSongs.length > 0){
+  if(filteredSongs.length > 0){
   return (
     <div className="w-full min-h-screen flex flex-col">
       <div className="flex flex-col justify-center items-start w-full min-h-screen pl-48 max-md:pl-0 max-md:items-center  ">
@@ -30,25 +33,27 @@ const Favourites = () => {
             Rydwan playlist
           </p>
         </h1>
-        <PlaylistCounter
-          songsList={favouritesSongs}
-          setSongsList={setSongsList}
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
+        {/* <PlaylistCounter
+          songsList={filteredSongs}
+          setSongsList={setFilteredSongs}
+          currentIndex={filteredIndex}
+          setCurrentIndex={setFilteredIndex}
           audioRefs={audioRefs}
-        />
+        /> */}
         <SongsList
-          currentIndex={currentIndex}
-          songsList={favouritesSongs}
+          currentIndex={filteredIndex}
+
+          songsList={filteredSongs}
           setSongsList={setSongsList}
-          setCurrentIndex={setCurrentIndex}
+          setFilteredSongs={setFilteredSongs}
+          setCurrentIndex={setFilteredIndex}
           audioRefs={audioRefs}
         />
       </div>
-      <MusicControl audioRefs={audioRefs} setSongsList={setSongsList} setCurrentIndex={setCurrentIndex} songsList={favouritesSongs} currentIndex={currentIndex} />
+      {/* <MusicControl audioRefs={audioRefs} songsList={favouritesSongs} setSongsList={setFilteredSongs} setCurrentIndex={setFilteredIndex}  currentIndex={filteredIndex} /> */}
     </div>
-  )
-  } else return <h1 className="text-white">You dont have favourites Songs</h1>
+  )} else return <h1>You dont have any favourites songs</h1>
+      
 }
 
 export default Favourites

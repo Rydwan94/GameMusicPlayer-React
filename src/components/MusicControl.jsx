@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   FaPlay,
   FaPause,
@@ -14,8 +15,11 @@ const MusicControl = ({
   currentIndex,
   setCurrentIndex,
 }) => {
-  const songTitle = songsList[currentIndex].title;
-  const songIsActive = !songsList[currentIndex].isActive;
+
+  
+  const songTitle = songsList[currentIndex]?.title;
+
+  const songIsActive = !songsList[currentIndex]?.isActive;
   const currentSongRef = audioRefs.current[currentIndex];
   const [currentTime, setCurrentTime] = useState("0:00");
   const [progress, setProgress] = useState(0);

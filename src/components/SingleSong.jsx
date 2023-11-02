@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { FaPlay, FaPause, FaHeart } from "react-icons/fa";
 
 const SingleSong = ({
@@ -15,6 +17,17 @@ const SingleSong = ({
 }) => {
 
   const isFavourite = songsList[index].isFavourite;
+  const findItem = songsList.find(song => song)
+
+  const location = useLocation();
+  const { pathname } = location;
+
+  useEffect(() => {
+    if (pathname === "/favourites" && findItem) {
+      setCurrentIndex(songsList.length - 1);
+      console.log(songsList.length - 1)
+    }
+  }, [songsList.length]);
 
   
  
@@ -31,7 +44,8 @@ const SingleSong = ({
         songRef.current.pause();
       }
 
-      setSongsList(updatedSongData);
+
+      setFilteredSongs(updatedSongData)
     }
   };
 
@@ -40,25 +54,24 @@ const SingleSong = ({
   };
 
   const handleIsFavourite = () => {
-    const updatedSong = [...songsList];
-
-    if (currentIndex === index) {     
-      const songToModify = updatedSong[currentIndex];
-      
+    const updatedSongData = [...songsList];
+    const songToModify = updatedSongData[index];
+  
+    if (currentIndex === index) {
       songToModify.isFavourite = !songToModify.isFavourite;
-      setSongsList(updatedSong)
     }
-    
-    const filtered = updatedSong.filter(song => song.isFavourite)
-    setFilteredSongs(filtered)
+  
+    const filtered = updatedSongData.filter(song => song.isFavourite);
+
+    setFilteredSongs(filtered);
   };
   
   return (
     <div
       onClick={handleSelectSong}
-      className={`flex justify-between items-center snap-start max-md:snap-center min-w-[600px] h-[200px]  max-md:h-[110px] max-md:min-w-[90%] max-md:ml-16  rounded-2xl bg-black text-white mr-7 border border-[#7C7C7C] ${
+      className={`flex justify-between items-center snap-start max-md:snap-center min-w-[600px] h-[200px]  max-md:h-[110px] max-md:min-w-[90%] max-md:ml-16  rounded-2xl bg-black bg-opacity-80 text-white mr-7 border border-[#7C7C7C] ${
         currentIndex === index &&
-        " bg-gradient-to-r from-[#151515] to-[#4f0b84]"
+        "bg-gradient-to-r  from-[#1515158e] to-[#500b84e1] "
       }`}
     >
       <img

@@ -1,18 +1,21 @@
-import { useContext, useRef } from "react";
+import { createRef, useContext, useRef } from "react";
 import { themeContext } from "../context/context";
 import PlaylistCounter from "../components/PlaylistCounter";
 import SongsList from "../components/SongsList";
 import MusicControl from "../components/MusicControl";
+import { filteredSongsContext } from "../context/filteredSongsProvider";
 
 export const Playlist = () => {
 
   const context = useContext(themeContext)
-  const { songsList, setSongsList, setFilteredSongs,  currentIndex, setCurrentIndex } = context
+  const filteredContext = useContext(filteredSongsContext)
+  const { songsList, setSongsList,   currentIndex, setCurrentIndex } = context
+  const {setFilteredSongs} = filteredContext
 
   
 
-    const audioRefs = useRef(songsList.map(() => useRef()));
-  console.log(songsList)
+    const audioRefs = useRef(songsList.map(() => createRef()));
+
   return (
     <div className="w-full min-h-screen flex flex-col">
       <div className="flex flex-col justify-center items-start w-full min-h-screen pl-48 max-md:pl-0 max-md:items-center  ">

@@ -7,23 +7,21 @@ import { FaHeart } from "react-icons/fa";
 import Hamburger from "../components/Hamburger";
 import Logo from "../components/Logo";
 import { themeContext } from "../context/context";
+import { filteredSongsContext } from "../context/filteredSongsProvider";
 
 const Navbar = () => {
   const context = useContext(themeContext);
+  const filteredContext = useContext(filteredSongsContext);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const location = useLocation();
   const { pathname } = location;
-  
-  const navigate = useNavigate()
 
-  const {
-    songsList,
-    filteredSongs,
-    setBgImage,
-    currentIndex,
-    setFilteredIndex,
-  } = context;
+  const navigate = useNavigate();
+
+  const { filteredSongs, setFilteredIndex } = filteredContext;
+  const { songsList, setBgImage, setCurrentIndex } = context;
 
   const isFavourite = songsList.filter((song) => song.isFavourite).length;
   const favouritesSongs = filteredSongs.filter((song) => song.isFavourite);
@@ -31,27 +29,25 @@ const Navbar = () => {
   useEffect(() => {
     if (pathname === "/favourites" && favouritesSongs.length > 0) {
       const currentSongImg = favouritesSongs[0];
-      setFilteredIndex(0)
+      setFilteredIndex(0);
       setBgImage(currentSongImg.img);
     } else if (pathname === "/playlist") {
-      const currentSongImg = songsList[currentIndex];
+      const currentSongImg = songsList[0];
+      setCurrentIndex(0)
       setBgImage(currentSongImg.img);
     }
   }, [pathname]);
 
-  
   const handleMenu = () => {
     setIsOpen(!isOpen);
   };
-  
+
   const redirectToAnotherURL = () => {
-    navigate('/favourites'); 
+    navigate("/favourites");
   };
-  
 
   const links = navLinks.map((link) => (
     <li
-     
       className="font-cabin text-cente p-1 mx-4 max-md:py-4 rounded-xl transition-all hover:bg-white hover:scale-95 hover:text-black"
       key={link.label}
     >
@@ -62,7 +58,8 @@ const Navbar = () => {
   return (
     <header className="relative flex justify-between flex-wrap w-full bg-gradient-to-r from-[#151515] to-[#170525]">
       <section className="flex items-center pl-4 max-md:absolute top-5 left-20">
-        <FaHeart onClick={redirectToAnotherURL}
+        <FaHeart
+          onClick={redirectToAnotherURL}
           className={`text-xl text-secondaryText ${
             isFavourite && "animate-jump text-red-600"
           }`}

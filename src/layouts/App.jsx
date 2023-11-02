@@ -3,17 +3,13 @@ import { themeContext } from "../context/context";
 import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Pages from "./Pages";
+import { filteredSongsContext } from "../context/filteredSongsProvider";
 
 function App() {
   const context = useContext(themeContext);
-  const {
-    bgImage,
-    currentIndex,
-    songsList,
-    setBgImage,
-    filteredIndex,
-    filteredSongs,
-  } = context;
+  const filteredContext = useContext(filteredSongsContext);
+  const { filteredSongs, filteredIndex, setFilteredIndex } = filteredContext;
+  const { bgImage, currentIndex, songsList, setBgImage } = context;
 
   const filteredSongsList = filteredSongs.filter((song) => song.isFavourite);
 
@@ -21,16 +17,19 @@ function App() {
   const { pathname } = location;
 
   useEffect(() => {
+    if(songsList.length > 0 && pathname === "/playlist"){
     const currentSong = songsList[currentIndex];
     setBgImage(currentSong.img);
-  }, [currentIndex, songsList, setBgImage]);
-
-  useEffect(() => {
-    if (filteredSongsList.length > 0 && pathname === "/favourites") {
-      const currentSong = filteredSongsList[filteredIndex];
-      setBgImage(currentSong.img);
     }
-  }, [filteredIndex, filteredSongsList, setBgImage]);
+  }, [currentIndex, songsList]);
+
+  // useEffect(() => {
+  //   if (filteredSongsList.length > 0 && pathname === "/favourites") {
+  //     const currentSong = filteredSongsList[filteredIndex];
+  //     setBgImage(currentSong.img);
+  //     console.log(currentSong)
+  //   }
+  // }, [filteredIndex, filteredSongsList.length]);
 
   return (
     <div

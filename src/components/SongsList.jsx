@@ -11,7 +11,6 @@ const SongsList = ({
 }) => {
   const songsListRef = useRef(null);
 
-  
   useEffect(() => {
     if (songsListRef.current && currentIndex >= 0) {
       const songElements = songsListRef.current.children;
@@ -23,14 +22,8 @@ const SongsList = ({
       }
     }
   }, [currentIndex]);
-  
-
-
-
-
 
   const songs = songsList.map((song, index) => (
-
     <SingleSong
       key={song.id}
       {...song}

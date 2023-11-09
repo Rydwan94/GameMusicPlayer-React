@@ -22,16 +22,16 @@ const Favourites = () => {
   const updatedFilteredSongs = filteredSongs.filter(
     (song) => song.isFavourite === true
   );
-    
+
   useEffect(() => {
-    if(pathname === "/favourites"){
-      const updatedSongs = updatedFilteredSongs.map(song => ({
+    if (pathname === "/favourites") {
+      const updatedSongs = updatedFilteredSongs.map((song) => ({
         ...song,
-        isActive: false
-      }))
-      setFilteredSongs(updatedSongs)
+        isActive: false,
+      }));
+      setFilteredSongs(updatedSongs);
     }
-  },[pathname])
+  }, [pathname]);
 
   if (updatedFilteredSongs.length > 0) {
     return (
@@ -67,7 +67,7 @@ const Favourites = () => {
         />
       </div>
     );
-  } else return <NoFavouritseInfo />
+  } else return <NoFavouritseInfo />;
 };
 
 export default Favourites;

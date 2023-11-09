@@ -1,4 +1,4 @@
-import {  useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { themeContext } from "../context/context";
 import PlaylistCounter from "../components/PlaylistCounter";
@@ -16,15 +16,14 @@ export const Playlist = () => {
   const { pathname } = location;
 
   useEffect(() => {
-    if(pathname === "/playlist"){
-    const updatedSongs = songsList.map(song => ({
-      ...song,
-      isActive: false
-    }))
-    setSongsList(updatedSongs)
-  }
-
-  },[pathname])
+    if (pathname === "/playlist") {
+      const updatedSongs = songsList.map((song) => ({
+        ...song,
+        isActive: false,
+      }));
+      setSongsList(updatedSongs);
+    }
+  }, [pathname]);
 
   return (
     <div className="w-full min-h-screen flex flex-col">

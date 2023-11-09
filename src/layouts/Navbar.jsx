@@ -33,7 +33,7 @@ const Navbar = () => {
       setBgImage(currentSongImg.img);
     } else if (pathname === "/playlist") {
       const currentSongImg = songsList[0];
-      setCurrentIndex(0)
+      setCurrentIndex(0);
       setBgImage(currentSongImg.img);
     }
   }, [pathname]);
@@ -51,7 +51,9 @@ const Navbar = () => {
       className="font-cabin text-center p-1 mx-4 max-md:py-4 rounded-xl transition-all hover:bg-white hover:scale-95 hover:text-black"
       key={link.label}
     >
-      <NavLink onClick={() => setIsOpen(false)} to={link.path}>{link.label}</NavLink>
+      <NavLink onClick={() => setIsOpen(false)} to={link.path}>
+        {link.label}
+      </NavLink>
     </li>
   ));
 
@@ -61,7 +63,9 @@ const Navbar = () => {
         <FaHeart
           onClick={redirectToAnotherURL}
           className={`text-xl hover:animate-ping  ${
-            favouritesSongs.length ? "animate-jump text-red-700" : "text-secondaryText"
+            favouritesSongs.length
+              ? "animate-jump text-red-700"
+              : "text-secondaryText"
           }`}
         />
         <p className="text-white mb-4">{favouritesSongs.length}</p>

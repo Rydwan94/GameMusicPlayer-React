@@ -14,16 +14,12 @@ const MusicControl = ({
   currentIndex,
   setCurrentIndex,
 }) => {
-
-  
   const songTitle = songsList[currentIndex]?.title;
 
   const songIsActive = !songsList[currentIndex]?.isActive;
   const currentSongRef = songsList[currentIndex]?.songRef.current;
   const [currentTime, setCurrentTime] = useState("0:00");
   const [progress, setProgress] = useState(0);
-
-  
 
   useEffect(() => {
     if (currentSongRef) {
@@ -34,16 +30,13 @@ const MusicControl = ({
           .padStart(2, "0");
         setCurrentTime(`${minutes}:${seconds}`);
         const calculatedProgress =
-          (currentSongRef.currentTime /
-            currentSongRef.duration) *
-          100;
+          (currentSongRef.currentTime / currentSongRef.duration) * 100;
         setProgress(isNaN(calculatedProgress) ? 0 : calculatedProgress);
       };
 
       currentSongRef.addEventListener("timeupdate", updateCurrentTime);
     }
   }, [currentSongRef]);
-
 
   const handlePlayPause = () => {
     const updatedSong = [...songsList];
@@ -135,7 +128,9 @@ const MusicControl = ({
       </div>
       <div className="flex justify-between items-center relative z-0 px-2 bg-gradient-to-r from-[#151515] to-[#170525] h-20 w-full">
         <section className="flex flex-col items-center">
-          <p className="text-primaryText text-xl max-md:text-[12px]">{songTitle}</p>
+          <p className="text-primaryText text-xl max-md:text-[12px]">
+            {songTitle}
+          </p>
           <p className="text-[#A0A0A0] max-md:text-[12px]">Rydwan Remix</p>
         </section>
         <section className="flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 justify-between items-center ">

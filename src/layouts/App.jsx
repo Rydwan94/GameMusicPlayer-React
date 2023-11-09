@@ -8,7 +8,7 @@ import { filteredSongsContext } from "../context/filteredSongsProvider";
 function App() {
   const context = useContext(themeContext);
   const filteredContext = useContext(filteredSongsContext);
-  const { filteredSongs, filteredIndex} = filteredContext;
+  const { filteredSongs, filteredIndex } = filteredContext;
   const { bgImage, currentIndex, songsList, setBgImage } = context;
 
   const filteredSongsList = filteredSongs.filter((song) => song.isFavourite);
@@ -17,11 +17,11 @@ function App() {
   const { pathname } = location;
 
   useEffect(() => {
-    if(pathname === "/playlist"){
-    const currentSong = songsList[currentIndex];
-    setBgImage(currentSong.img);
+    if (pathname === "/playlist") {
+      const currentSong = songsList[currentIndex];
+      setBgImage(currentSong.img);
     }
-  }, [currentIndex, songsList,pathname]);
+  }, [currentIndex, songsList, pathname]);
 
   useEffect(() => {
     if (filteredSongsList.length > 0 && pathname === "/favourites") {

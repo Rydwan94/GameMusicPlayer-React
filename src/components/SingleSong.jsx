@@ -17,28 +17,23 @@ const SingleSong = ({
   setFilteredSongs,
   songRef,
 }) => {
+  const { songsList } = useContext(themeContext);
 
-  const {songsList} = useContext(themeContext)
-
-  const findItem = updatedSongsList.find(song => song)
+  const findItem = updatedSongsList.find((song) => song);
   const location = useLocation();
   const { pathname } = location;
-
-
 
   useEffect(() => {
     if (pathname === "/favourites" && findItem) {
       setCurrentIndex(updatedSongsList.length - 1);
     }
   }, [updatedSongsList.length]);
- 
- 
+
   const handlePlayPauseClick = () => {
     const updatedSongData = [...updatedSongsList];
     const isCurrentSong = currentIndex === index;
     const currentSong = updatedSongData[index];
 
-    
     if (isCurrentSong) {
       if (currentSong.isActive) {
         songRef.current.pause();
@@ -47,53 +42,47 @@ const SingleSong = ({
       }
       currentSong.isActive = !currentSong.isActive;
     } else {
-      // Jeśli kliknęliśmy inną piosenkę, zatrzymaj aktualną i odtwórz nową
-      
-        songRef.current.play();
-     
+      songRef.current.play();
+
       currentSong.isActive = true;
-  
-      // Zaktualizuj indeks na nowy
+
       setCurrentIndex(index);
-  
-      // Zatrzymaj odtwarzanie poprzednich piosenek
+
       updatedSongData.forEach((song, i) => {
         if (i !== index) {
           song.isActive = false;
-          song.songRef.current.pause()
+          song.songRef.current.pause();
         }
       });
     }
-  
+
     setFilteredSongs(updatedSongData);
   };
-  
 
   const handleIsFavourite = () => {
     const updatedSongData = [...updatedSongsList];
     const songToModify = updatedSongData[index];
-  
+
     // Odznacz jako nieulubione
     songToModify.isFavourite = !songToModify.isFavourite;
-  
+
     // Aktualizuj songsList
-    const updatedList = songsList.map(song => {
+    const updatedList = songsList.map((song) => {
       if (song.id === songToModify.id) {
         return { ...songToModify };
       }
       return { ...song };
     });
-  
+
     setSongsList(updatedList);
-  
+
     // Utwórz listę z ulubionymi
-    const filtered = updatedSongData.filter(song => song.isFavourite);
-  
+    const filtered = updatedSongData.filter((song) => song.isFavourite);
+
     // Ustaw stan skomponentu na podstawie nowych danych
     setFilteredSongs(filtered);
   };
-  
-  
+
   return (
     <div
       className={`flex justify-between items-center snap-start max-md:snap-center min-w-[600px] h-[200px]  max-md:h-[110px] max-md:min-w-[90%] max-md:ml-16  rounded-2xl bg-black bg-opacity-80 text-white mr-7 border border-[#7C7C7C] ${
@@ -114,7 +103,6 @@ const SingleSong = ({
             isFavourite ? "animate-jump text-red-700" : "text-secondaryText"
           }`}
         />
-       
       </div>
       <audio src={source} ref={songRef} />
       <button

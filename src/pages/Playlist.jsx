@@ -1,4 +1,5 @@
-import { createRef, useContext, useRef } from "react";
+import {  useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { themeContext } from "../context/context";
 import PlaylistCounter from "../components/PlaylistCounter";
 import SongsList from "../components/SongsList";
@@ -6,15 +7,24 @@ import MusicControl from "../components/MusicControl";
 import { filteredSongsContext } from "../context/filteredSongsProvider";
 
 export const Playlist = () => {
+  const context = useContext(themeContext);
+  const filteredContext = useContext(filteredSongsContext);
+  const { songsList, setSongsList, currentIndex, setCurrentIndex } = context;
+  const { setFilteredSongs } = filteredContext;
 
-  const context = useContext(themeContext)
-  const filteredContext = useContext(filteredSongsContext)
-  const { songsList, setSongsList,   currentIndex, setCurrentIndex } = context
-  const {setFilteredSongs} = filteredContext
+  const location = useLocation();
+  const { pathname } = location;
 
-  
+  useEffect(() => {
+    if(pathname === "/playlist"){
+    const updatedSongs = songsList.map(song => ({
+      ...song,
+      isActive: false
+    }))
+    setSongsList(updatedSongs)
+  }
 
-    const audioRefs = useRef(songsList.map(() => createRef()));
+  },[pathname])
 
   return (
     <div className="w-full min-h-screen flex flex-col">
@@ -30,21 +40,22 @@ export const Playlist = () => {
         <PlaylistCounter
           songsList={songsList}
           setSongsList={setSongsList}
-          
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
-          audioRefs={audioRefs}
         />
         <SongsList
           currentIndex={currentIndex}
           songsList={songsList}
-          setSongsList={setSongsList}
           setFilteredSongs={setFilteredSongs}
           setCurrentIndex={setCurrentIndex}
-          audioRefs={audioRefs}
         />
       </div>
-      <MusicControl audioRefs={audioRefs} setSongsList={setSongsList} setCurrentIndex={setCurrentIndex} songsList={songsList} currentIndex={currentIndex} />
+      <MusicControl
+        setSongsList={setSongsList}
+        setCurrentIndex={setCurrentIndex}
+        songsList={songsList}
+        currentIndex={currentIndex}
+      />
     </div>
   );
 };

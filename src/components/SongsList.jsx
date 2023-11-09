@@ -8,7 +8,6 @@ const SongsList = ({
   songsList,
   setSongsList,
   setFilteredSongs,
-  audioRefs
 }) => {
   const songsListRef = useRef(null);
 
@@ -29,7 +28,9 @@ const SongsList = ({
 
 
 
+
   const songs = songsList.map((song, index) => (
+
     <SingleSong
       key={index}
       {...song}
@@ -39,7 +40,6 @@ const SongsList = ({
       setFilteredSongs={setFilteredSongs}
       setSongsList={setSongsList}
       setCurrentIndex={setCurrentIndex}
-      songRef={audioRefs.current[index]}
     />
   ));
 

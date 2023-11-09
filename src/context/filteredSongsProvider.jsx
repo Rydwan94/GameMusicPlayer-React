@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 export const filteredSongsContext = createContext(undefined);
 
@@ -22,14 +22,14 @@ const FilteredSongsProvider = ({ children }) => {
 
 //custom hook
 
-export const useFilteredSongsContext = () => {
-  const filteredSongs = useContext(filteredSongsContext)
+// export const useFilteredSongsContext = () => {
+//   const filteredSongs = useContext(filteredSongsContext)
 
-  if(filteredSongs === undefined){
-    throw new Error("useFilteredSongsContext must be used with filteredSongsContext")
-  }
+//   if(filteredSongs === undefined){
+//     throw new Error("useFilteredSongsContext must be used with filteredSongsContext")
+//   }
 
-  return filteredSongs
-}
+//   return filteredSongs
+// }
 
 export default FilteredSongsProvider;

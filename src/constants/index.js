@@ -15,6 +15,7 @@ import godOfWarTheme from '../assets/music/godOfWar.mp3'
 import spidermanTheme from '../assets/music/SpidermanTheme.mp3'
 import cyberpunkTheme from '../assets/music/cyberpunkTheme.mp3'
 import witcherTheme from '../assets/music/theWitcherTheme.mp3'
+import { createRef } from "react";
 
 
 export const navLinks = [
@@ -36,6 +37,7 @@ export const songs = [
     img: jinx,
     isActive: false,
     isFavourite: false,
+    songRef: createRef()
   },
   {
     
@@ -44,6 +46,7 @@ export const songs = [
     img: riven,
     isActive: false,
     isFavourite: false,
+    songRef: createRef()
   },
   {
     
@@ -52,6 +55,7 @@ export const songs = [
     img: godOfWar,
     isActive: false,
     isFavourite: false,
+    songRef: createRef()
   },
   {
     
@@ -60,6 +64,7 @@ export const songs = [
     img:  spiderman,
     isActive: false,
     isFavourite: false,
+    songRef: createRef()
   },
   {
     
@@ -68,6 +73,7 @@ export const songs = [
     img: cyberpunk  ,
     isActive: false,
     isFavourite: false,
+    songRef: createRef()
   },
   {
     
@@ -76,6 +82,7 @@ export const songs = [
     img: witcher  ,
     isActive: false,
     isFavourite: false,
+    songRef: createRef()
   },
   
   

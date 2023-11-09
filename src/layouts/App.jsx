@@ -8,7 +8,7 @@ import { filteredSongsContext } from "../context/filteredSongsProvider";
 function App() {
   const context = useContext(themeContext);
   const filteredContext = useContext(filteredSongsContext);
-  const { filteredSongs, filteredIndex, setFilteredIndex } = filteredContext;
+  const { filteredSongs, filteredIndex} = filteredContext;
   const { bgImage, currentIndex, songsList, setBgImage } = context;
 
   const filteredSongsList = filteredSongs.filter((song) => song.isFavourite);
@@ -17,19 +17,19 @@ function App() {
   const { pathname } = location;
 
   useEffect(() => {
-    if(songsList.length > 0 && pathname === "/playlist"){
+    if(pathname === "/playlist"){
     const currentSong = songsList[currentIndex];
     setBgImage(currentSong.img);
     }
-  }, [currentIndex, songsList]);
+  }, [currentIndex, songsList,pathname]);
 
-  // useEffect(() => {
-  //   if (filteredSongsList.length > 0 && pathname === "/favourites") {
-  //     const currentSong = filteredSongsList[filteredIndex];
-  //     setBgImage(currentSong.img);
-  //     console.log(currentSong)
-  //   }
-  // }, [filteredIndex, filteredSongsList.length]);
+  useEffect(() => {
+    if (filteredSongsList.length > 0 && pathname === "/favourites") {
+      const currentSong = filteredSongsList[filteredIndex];
+      setBgImage(currentSong?.img);
+      console.log(currentSong)
+    }
+  }, [filteredIndex, filteredSongsList.length, pathname]);
 
   return (
     <div

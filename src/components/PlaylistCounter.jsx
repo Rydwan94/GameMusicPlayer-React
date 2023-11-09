@@ -1,9 +1,9 @@
 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-const PlaylistCounter = ({ currentIndex, setCurrentIndex, songsList, setSongsList, audioRefs }) => {
+const PlaylistCounter = ({ currentIndex, setCurrentIndex, songsList, setSongsList }) => {
 
-  const currentSong = audioRefs.current[currentIndex]
+  const currentSong = songsList[currentIndex]?.songRef.current;
   
 
 
@@ -13,8 +13,8 @@ const PlaylistCounter = ({ currentIndex, setCurrentIndex, songsList, setSongsLis
       
       setCurrentIndex(prev => prev + 1);
       updatedSongs[currentIndex].isActive = false
-      currentSong.current.currentTime = 0
-      currentSong.current.pause()
+      currentSong.currentTime = 0
+      currentSong.pause()
     }
 
     setSongsList(updatedSongs)
@@ -25,8 +25,8 @@ const PlaylistCounter = ({ currentIndex, setCurrentIndex, songsList, setSongsLis
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
       updatedSongs[currentIndex].isActive = false
-      currentSong.current.currentTime = 0
-      currentSong.current.pause()
+      currentSong.currentTime = 0
+      currentSong.pause()
     }
 
     setSongsList(updatedSongs)

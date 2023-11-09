@@ -51,7 +51,7 @@ const Navbar = () => {
       className="font-cabin text-cente p-1 mx-4 max-md:py-4 rounded-xl transition-all hover:bg-white hover:scale-95 hover:text-black"
       key={link.label}
     >
-      <NavLink to={link.path}>{link.label}</NavLink>
+      <NavLink onClick={() => setIsOpen(false)} to={link.path}>{link.label}</NavLink>
     </li>
   ));
 

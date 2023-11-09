@@ -20,7 +20,7 @@ const MusicControl = ({
   const songTitle = songsList[currentIndex]?.title;
 
   const songIsActive = !songsList[currentIndex]?.isActive;
-  const currentSongRef = audioRefs.current[currentIndex];
+  const currentSongRef = songsList[currentIndex]?.songRef.current;
   const [currentTime, setCurrentTime] = useState("0:00");
   const [progress, setProgress] = useState(0);
 
@@ -29,19 +29,19 @@ const MusicControl = ({
   useEffect(() => {
     if (currentSongRef) {
       const updateCurrentTime = () => {
-        const minutes = Math.floor(currentSongRef.current.currentTime / 60);
-        const seconds = Math.floor(currentSongRef.current.currentTime % 60)
+        const minutes = Math.floor(currentSongRef.currentTime / 60);
+        const seconds = Math.floor(currentSongRef.currentTime % 60)
           .toString()
           .padStart(2, "0");
         setCurrentTime(`${minutes}:${seconds}`);
         const calculatedProgress =
-          (currentSongRef.current.currentTime /
-            currentSongRef.current.duration) *
+          (currentSongRef.currentTime /
+            currentSongRef.duration) *
           100;
         setProgress(isNaN(calculatedProgress) ? 0 : calculatedProgress);
       };
 
-      currentSongRef.current.addEventListener("timeupdate", updateCurrentTime);
+      currentSongRef.addEventListener("timeupdate", updateCurrentTime);
     }
   }, [currentSongRef]);
 
@@ -53,9 +53,9 @@ const MusicControl = ({
     console.log(currentIndex);
 
     if (currentSong.isActive) {
-      currentSongRef.current.pause();
+      currentSongRef.pause();
     } else {
-      currentSongRef.current.play();
+      currentSongRef.play();
     }
 
     currentSong.isActive = !currentSong.isActive;
@@ -66,16 +66,15 @@ const MusicControl = ({
   const handleNextSongButton = () => {
     if (currentIndex < songsList.length - 1) {
       const nextIndex = currentIndex + 1;
-      const newSongRef = audioRefs.current[nextIndex];
-
+      const newSongRef = songsList[nextIndex].songRef.current;
       const updatedSongList = [...songsList];
 
       updatedSongList[currentIndex].isActive = false;
-      currentSongRef.current.pause();
-      currentSongRef.current.currentTime = 0;
+      currentSongRef.pause();
+      currentSongRef.currentTime = 0;
 
       if (newSongRef) {
-        newSongRef.current.play();
+        newSongRef.play();
         updatedSongList[nextIndex].isActive = true;
       }
 
@@ -88,16 +87,16 @@ const MusicControl = ({
   const handlePrevSongButton = () => {
     if (currentIndex > 0) {
       const prevIndex = currentIndex - 1;
-      const newSongRef = audioRefs.current[prevIndex];
+      const newSongRef = songsList[prevIndex].songRef.current;
 
       const updatedSongList = [...songsList];
 
       updatedSongList[currentIndex].isActive = false;
-      currentSongRef.current.pause();
-      currentSongRef.current.currentTime = 0;
+      currentSongRef.pause();
+      currentSongRef.currentTime = 0;
 
       if (newSongRef) {
-        newSongRef.current.play();
+        newSongRef.play();
         updatedSongList[prevIndex].isActive = true;
       }
 
@@ -108,7 +107,7 @@ const MusicControl = ({
   };
 
   const handleResetSong = () => {
-    currentSongRef.current.currentTime = 0;
+    currentSongRef.currentTime = 0;
   };
 
   const handleProgressClick = (e) => {
@@ -118,8 +117,8 @@ const MusicControl = ({
     const newProgress = (offsetX / rect.width) * 100;
     setProgress(newProgress);
 
-    const newTime = (newProgress / 100) * currentSongRef.current.duration;
-    currentSongRef.current.currentTime = newTime;
+    const newTime = (newProgress / 100) * currentSongRef.duration;
+    currentSongRef.currentTime = newTime;
   };
 
   return (

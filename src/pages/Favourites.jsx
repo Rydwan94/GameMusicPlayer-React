@@ -1,23 +1,38 @@
-import { useContext, useRef, useEffect, createRef } from "react";
-import { filteredSongsContext, useFilteredSongsContext } from "../context/filteredSongsProvider";
+import { useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { filteredSongsContext } from "../context/filteredSongsProvider";
+import { themeContext } from "../context/context";
 
 import SongsList from "../components/SongsList";
 import MusicControl from "../components/MusicControl";
 import PlaylistCounter from "../components/PlaylistCounter";
-import { themeContext } from "../context/context";
 
 const Favourites = () => {
-  const filteredContext = useContext(filteredSongsContext);
   const context = useContext(themeContext);
+  const filteredContext = useContext(filteredSongsContext);
   const { filteredSongs, setFilteredSongs, filteredIndex, setFilteredIndex } =
-    useFilteredSongsContext();
+    filteredContext;
+
   const { setSongsList } = context;
 
-  const audioRefs = useRef(filteredSongs.map(() => createRef()));
+  const location = useLocation();
+  const { pathname } = location;
 
-  filteredSongs.forEach(song => song.isActive === false)
+  const updatedFilteredSongs = filteredSongs.filter(
+    (song) => song.isFavourite === true
+  );
+    
+  useEffect(() => {
+    if(pathname === "/favourites"){
+      const updatedSongs = updatedFilteredSongs.map(song => ({
+        ...song,
+        isActive: false
+      }))
+      setFilteredSongs(updatedSongs)
+    }
+  },[pathname])
 
-  if (filteredSongs.length > 0) {
+  if (updatedFilteredSongs.length > 0) {
     return (
       <div className="w-full min-h-screen flex flex-col">
         <div className="flex flex-col justify-center items-start w-full min-h-screen pl-48 max-md:pl-0 max-md:items-center  ">
@@ -30,22 +45,25 @@ const Favourites = () => {
             </p>
           </h1>
           <PlaylistCounter
-            songsList={filteredSongs}
+            songsList={updatedFilteredSongs}
             setSongsList={setFilteredSongs}
             currentIndex={filteredIndex}
             setCurrentIndex={setFilteredIndex}
-            audioRefs={audioRefs}
           />
           <SongsList
             currentIndex={filteredIndex}
-            songsList={filteredSongs}
+            songsList={updatedFilteredSongs}
             setSongsList={setSongsList}
             setFilteredSongs={setFilteredSongs}
             setCurrentIndex={setFilteredIndex}
-            audioRefs={audioRefs}
           />
         </div>
-        <MusicControl audioRefs={audioRefs} songsList={filteredSongs} setSongsList={setFilteredSongs} setCurrentIndex={setFilteredIndex}  currentIndex={filteredIndex} />
+        <MusicControl
+          songsList={updatedFilteredSongs}
+          setSongsList={setFilteredSongs}
+          setCurrentIndex={setFilteredIndex}
+          currentIndex={filteredIndex}
+        />
       </div>
     );
   } else return <h1>You dont have any favourites songs</h1>;

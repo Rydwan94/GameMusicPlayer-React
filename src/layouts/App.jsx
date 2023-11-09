@@ -27,7 +27,6 @@ function App() {
     if (filteredSongsList.length > 0 && pathname === "/favourites") {
       const currentSong = filteredSongsList[filteredIndex];
       setBgImage(currentSong?.img);
-      console.log(currentSong)
     }
   }, [filteredIndex, filteredSongsList.length, pathname]);
 

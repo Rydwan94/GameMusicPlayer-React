@@ -48,7 +48,7 @@ const Navbar = () => {
 
   const links = navLinks.map((link) => (
     <li
-      className="font-cabin text-cente p-1 mx-4 max-md:py-4 rounded-xl transition-all hover:bg-white hover:scale-95 hover:text-black"
+      className="font-cabin text-center p-1 mx-4 max-md:py-4 rounded-xl transition-all hover:bg-white hover:scale-95 hover:text-black"
       key={link.label}
     >
       <NavLink onClick={() => setIsOpen(false)} to={link.path}>{link.label}</NavLink>
@@ -60,11 +60,11 @@ const Navbar = () => {
       <section className="flex items-center pl-4 max-md:absolute top-5 left-20">
         <FaHeart
           onClick={redirectToAnotherURL}
-          className={`text-xl text-secondaryText ${
-            isFavourite && "animate-jump text-red-600"
+          className={`text-xl hover:animate-ping  ${
+            favouritesSongs.length ? "animate-jump text-red-700" : "text-secondaryText"
           }`}
         />
-        <p className="text-white mb-4">{isFavourite}</p>
+        <p className="text-white mb-4">{favouritesSongs.length}</p>
       </section>
       <section className="max-md:w-full flex justify-between">
         <Hamburger onClick={handleMenu} isOpen={isOpen} />

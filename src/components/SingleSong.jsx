@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { FaPlay, FaPause, FaHeart } from "react-icons/fa";
+import { themeContext } from "../context/context";
 
 const SingleSong = ({
   index,
@@ -11,12 +12,15 @@ const SingleSong = ({
   title,
   isActive,
   isFavourite,
-  songsList,
+  updatedSongsList,
   setSongsList,
   setFilteredSongs,
   songRef,
 }) => {
-  const findItem = songsList.find(song => song)
+
+  const {songsList} = useContext(themeContext)
+
+  const findItem = updatedSongsList.find(song => song)
   const location = useLocation();
   const { pathname } = location;
 
@@ -24,14 +28,13 @@ const SingleSong = ({
 
   useEffect(() => {
     if (pathname === "/favourites" && findItem) {
-      setCurrentIndex(songsList.length - 1);
-      console.log(songsList.length - 1)
+      setCurrentIndex(updatedSongsList.length - 1);
     }
-  }, [songsList.length]);
+  }, [updatedSongsList.length]);
  
  
   const handlePlayPauseClick = () => {
-    const updatedSongData = [...songsList];
+    const updatedSongData = [...updatedSongsList];
     const isCurrentSong = currentIndex === index;
     const currentSong = updatedSongData[index];
 
@@ -67,16 +70,29 @@ const SingleSong = ({
   
 
   const handleIsFavourite = () => {
-    const updatedSongData = [...songsList];
+    const updatedSongData = [...updatedSongsList];
     const songToModify = updatedSongData[index];
   
-    if (currentIndex === index) {
-      songToModify.isFavourite = !songToModify.isFavourite;
-    }
+    // Odznacz jako nieulubione
+    songToModify.isFavourite = !songToModify.isFavourite;
   
+    // Aktualizuj songsList
+    const updatedList = songsList.map(song => {
+      if (song.id === songToModify.id) {
+        return { ...songToModify };
+      }
+      return { ...song };
+    });
+  
+    setSongsList(updatedList);
+  
+    // Utwórz listę z ulubionymi
     const filtered = updatedSongData.filter(song => song.isFavourite);
+  
+    // Ustaw stan skomponentu na podstawie nowych danych
     setFilteredSongs(filtered);
   };
+  
   
   return (
     <div
@@ -91,11 +107,11 @@ const SingleSong = ({
         className="rounded-2xl h-full border max-w-full border-[#7C7C7C] "
       />
       <div className="flex flex-col items-center">
-        <h3 className="font-allerta">{title}</h3>
+        <h3 className="font-allerta px-1 text-center">{title}</h3>
         <FaHeart
           onClick={handleIsFavourite}
-          className={`text-secondaryText mt-5 ${
-            isFavourite && "animate-jump text-red-700"
+          className={` mt-5 ${
+            isFavourite ? "animate-jump text-red-700" : "text-secondaryText"
           }`}
         />
        

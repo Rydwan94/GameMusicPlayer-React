@@ -46,6 +46,7 @@ export const Playlist = () => {
         <SongsList
           currentIndex={currentIndex}
           songsList={songsList}
+          setSongsList={setSongsList}
           setFilteredSongs={setFilteredSongs}
           setCurrentIndex={setCurrentIndex}
         />

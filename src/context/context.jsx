@@ -11,7 +11,7 @@ const ContextProvider = ({ children }) => {
 
   const [songsList, setSongsList] = useState(songs)
 
-  const [bgImage, setBgImage] = useState(images);
+  const [bgImage, setBgImage] = useState(images[0]);
   const [currentIndex, setCurrentIndex] = useState(0)
 
  

@@ -31,7 +31,7 @@ export const navLinks = [
 
 export const songs = [
   {
-   
+   id:0,
     title: "Legends Never Die",
     source: LegendsNeverDie,
     img: jinx,
@@ -40,7 +40,7 @@ export const songs = [
     songRef: createRef()
   },
   {
-    
+    id:1,
     title: "Ignite",
     source: Ignite,
     img: riven,
@@ -49,7 +49,7 @@ export const songs = [
     songRef: createRef()
   },
   {
-    
+    id:2,
     title: "God of War",
     source: godOfWarTheme,
     img: godOfWar,
@@ -58,7 +58,7 @@ export const songs = [
     songRef: createRef()
   },
   {
-    
+    id:3,
     title: "Spider-Man",
     source: spidermanTheme,
     img:  spiderman,
@@ -67,7 +67,7 @@ export const songs = [
     songRef: createRef()
   },
   {
-    
+    id:4,
     title: "Cyberpunk",
     source: cyberpunkTheme,
     img: cyberpunk  ,
@@ -76,7 +76,7 @@ export const songs = [
     songRef: createRef()
   },
   {
-    
+    id:5,
     title: "The Witcher",
     source: witcherTheme,
     img: witcher  ,

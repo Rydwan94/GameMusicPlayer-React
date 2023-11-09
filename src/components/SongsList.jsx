@@ -32,11 +32,11 @@ const SongsList = ({
   const songs = songsList.map((song, index) => (
 
     <SingleSong
-      key={index}
+      key={song.id}
       {...song}
       index={index}
       currentIndex={currentIndex}
-      songsList={songsList}
+      updatedSongsList={songsList}
       setFilteredSongs={setFilteredSongs}
       setSongsList={setSongsList}
       setCurrentIndex={setCurrentIndex}

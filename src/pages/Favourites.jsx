@@ -6,6 +6,7 @@ import { themeContext } from "../context/context";
 import SongsList from "../components/SongsList";
 import MusicControl from "../components/MusicControl";
 import PlaylistCounter from "../components/PlaylistCounter";
+import NoFavouritseInfo from "../components/NoFavouritseInfo";
 
 const Favourites = () => {
   const context = useContext(themeContext);
@@ -66,7 +67,7 @@ const Favourites = () => {
         />
       </div>
     );
-  } else return <h1>You dont have any favourites songs</h1>;
+  } else return <NoFavouritseInfo />
 };
 
 export default Favourites;

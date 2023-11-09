@@ -9,7 +9,6 @@ import {
 } from "react-icons/fa";
 
 const MusicControl = ({
-  audioRefs,
   songsList,
   setSongsList,
   currentIndex,
